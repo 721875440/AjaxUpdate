@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
 <head>
@@ -7,27 +8,24 @@
 
 <body>
 <div id="app">
-<input type="text" value="" id="title"><br>
-<textarea id="description"></textarea><br>
-<input type="file" id="videoFile"><br
->
-<button id="commit">提交</button>
+  <input type="text" value="" id="title"><br>
+  <textarea id="description"></textarea><br>
+  <input type="file" id="videoFile"><br>
+  <button id="commit">提交</button>
 
-
-
-<div id="fileName">
-</div>
-<div id="fileSize">
-</div>
-<div id="fileType">
-</div> 
-<div id="progressNumber">
+  <div id="fileName"></div>
+  <div id="fileSize"></div>
+  <div id="fileType"></div> 
+  <div id="progressNumber"></div>
 </div>
 
-</div>
+<style>
+  body{ background-color: blueviolet;}
+input{ width: 80%; height:20px;}
+textarea{ width: 80%; height:80px;}
+</style>
 
-
-
+<!--Thanks you HR -->
 <script>
 
  var title = document.getElementById("title");
@@ -53,26 +51,15 @@
 							 }else{
 								alert("文件太大了，不能超过50MB");	 
 								 }
-	 
-				 
-				 
 				 }else{
           console.log("请使用MP4视频文件格式");	 
 					 }
-			 
-			 
-			 
-			 
-			 
 			 }else{
 				alert("请填写描述");	 
 				 }
-		 
-		 
 	 }else{
 		alert("请填写标题");	 
 		 } // true
-	 
  }
 
  
