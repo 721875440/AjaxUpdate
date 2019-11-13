@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+</head>
+
+<body>
+<div id="app">
+<input type="text" value="" id="title"><br>
+<textarea id="description"></textarea><br>
+<input type="file" id="videoFile"><br
+>
+<button id="commit">提交</button>
+
+
+
+<div id="fileName">
+</div>
+<div id="fileSize">
+</div>
+<div id="fileType">
+</div> 
+<div id="progressNumber">
+</div>
+
+</div>
+
+
+
+<script>
+
+ var title = document.getElementById("title");
+ var description = document.getElementById("description");
+ var videoFile = document.getElementById("videoFile");
+ var commit = document.getElementById("commit");
+ commit.onclick = function(){
+	 var str = title.value;
+	 var str2 = description.value;
+	// alert(str2);
+	 var regExp = /\S/;
+	 if(regExp.test(str)){
+		 if(regExp.test(str2)){
+			 console.log(videoFile.files);
+
+			var filetype = 	videoFile.files[0].type;
+			var filesize = 	videoFile.files[0].size;
+			 console.log(filetype);
+			 if(filetype=="video/mp4"){
+						 if(filesize <= 52428800){
+							fileSelected();
+							 console.log("上传成功");
+							 }else{
+								alert("文件太大了，不能超过50MB");	 
+								 }
+	 
+				 
+				 
+				 }else{
+          console.log("请使用MP4视频文件格式");	 
+					 }
+			 
+			 
+			 
+			 
+			 
+			 }else{
+				alert("请填写描述");	 
+				 }
+		 
+		 
+	 }else{
+		alert("请填写标题");	 
+		 } // true
+	 
+ }
+
+ 
+ 
+ 
+ function fileSelected() {
+            var file = document.getElementById('videoFile').files[0];
+            if (file) {
+              var fileSize = 0;
+              if (file.size > 1024 * 1024)
+                fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+              else
+                fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+              document.getElementById('fileName').innerHTML = 'Name: ' + file.name;
+              document.getElementById('fileSize').innerHTML = 'Size: ' + fileSize;
+              document.getElementById('fileType').innerHTML = 'Type: ' + file.type;
+              uploadFile();
+            }
+          }
+          function uploadFile() {
+            var fd = new FormData();
+            fd.append("file", document.getElementById('videoFile').files[0]);
+            var xhr = new XMLHttpRequest();
+            xhr.upload.addEventListener("progress", uploadProgress, false);
+            xhr.addEventListener("load", uploadComplete, false);
+            xhr.addEventListener("error", uploadFailed, false);
+            xhr.addEventListener("abort", uploadCanceled, false);
+            xhr.open("POST", "http://localhost/msg.php");
+            xhr.send(fd);
+          }
+          function uploadProgress(evt) {
+            if (evt.lengthComputable) {
+              var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+              document.getElementById('progressNumber').innerHTML = percentComplete.toString() + '%';
+            }
+            else {
+              document.getElementById('progressNumber').innerHTML = 'unable to compute';
+            }
+          }
+          function uploadComplete(evt) {
+            /* This event is raised when the server send back a response */
+            console.log(evt.target.responseText);
+          }
+          function uploadFailed(evt) {
+            alert("There was an error attempting to upload the file.");
+          }
+          function uploadCanceled(evt) {
+            alert("The upload has been canceled by the user or the browser dropped the connection.");
+          }
+
+
+</script>
+
+
+
+</body>
+</html>
